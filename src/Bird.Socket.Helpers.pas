@@ -36,7 +36,8 @@ var
   LMask: array [0..3] of byte;
 begin
   try
-    if ReadByte = $81 then
+    LByte := ReadByte;
+    if LByte = $81 then
     begin
       LByte := ReadByte;
       case LByte of
@@ -65,6 +66,11 @@ begin
       inherited ReadBytes(TIdBytes(result), LDecodedSize, False);
       for I := 0 to LDecodedSize - 1 do
         Result[I] := Result[I] xor LMask[I mod 4];
+    end
+    else
+    begin
+      Result := [LByte];
+      inherited ReadBytes(TIdBytes(Result), -1);
     end;
   except
   end;

@@ -21,6 +21,7 @@ type
     procedure Send(const ACode: Integer; const AMessage: string; const AValues: array of const); overload;
     procedure Send(const AJSONObject: TJSONObject; const AOwns: Boolean = True); overload;
     procedure SendFile(const AFile: string); overload;
+    property Context: TIdContext read FIdContext;
   end;
 
   TBirds = class

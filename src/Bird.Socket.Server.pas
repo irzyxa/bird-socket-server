@@ -114,16 +114,15 @@ begin
       end;
       LHeaders := ParseHeaders(LMessage);
       try
-        if LHeaders.ContainsKey(HEADERS_UPGRADE) and LHeaders.ContainsKey(HEADERS_AUTHORIZATION) then
-          if LHeaders[HEADERS_UPGRADE].ToLower.Equals(HEADERS_WEBSOCKET) then
-          begin
-            try
-              ABird.Connection.IOHandler.Write(GetSuccessHandShakeMessage(GetEncodedHash(LHeaders[HEADERS_AUTHORIZATION])),
-                IndyTextEncoding_UTF8);
-            except
-            end;
-            ABird.Connection.IOHandler.HandShaked := True;
+        if LHeaders.ContainsKey(HEADERS_AUTHORIZATION) then
+        begin
+          try
+             ABird.Connection.IOHandler.Write(GetSuccessHandShakeMessage(GetEncodedHash(LHeaders[HEADERS_AUTHORIZATION])),
+              IndyTextEncoding_UTF8);
+          except
           end;
+          ABird.Connection.IOHandler.HandShaked := True;
+        end;
       finally
         LHeaders.DisposeOf;
       end;
